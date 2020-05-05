@@ -1,0 +1,28 @@
+body{
+    display: grid;
+    grid-template-areas:
+    "header header"
+    "center menu"
+    "footer footer";
+    grid-template-rows: 10% 1fr 10%;
+    grid-template-columns: 1fr 40%;
+    grid-gap: 10px;
+    height: 100vh;
+    margin: 0;
+}
+div.part{
+    padding: 20px;
+    background: lightgray;
+}
+#header{
+    grid-area: header;
+}
+#center{
+    grid-area: center;
+}
+#menu{
+    grid-area: menu;
+}
+#footer{
+    grid-area: footer;
+}
