@@ -7,7 +7,6 @@ const APP_PORT = 3000;
 
 let TABLES = new Map([
   ["USERS", "weather_users"],
-  ["ADMINS", "weather_admins"],
   ["DATA", "weather_data"]
 ])
 
