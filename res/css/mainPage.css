@@ -2,8 +2,8 @@ body{
     display: grid;
     grid-template-areas:
     "header header"
-    "center center"
-    /* "center menu" */
+    /* "center center" */
+    "center menu"
     "footer footer";
     grid-template-rows: 10% 1fr 10%;
     grid-template-columns: 1fr 40%;
@@ -20,16 +20,16 @@ div.part{
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     grid-area: header;
-    /* padding-left: 10px;
-    padding-right: 10px; */
-    padding: 0 10px;
+    padding: 0px 10px;
 }
 #center{
     grid-area: center;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 #menu{
     grid-area: menu;
-    display: none;
+    display: block;
 }
 #footer{
     grid-area: footer;
@@ -42,7 +42,23 @@ div.part{
     position: absolute;
     height: 40%;
     width: 50%;
-    background: rgba(79, 139, 109, 0.9);
+    background: rgba(59, 187, 123, 0.9);
+    margin-left: 25%;
+    margin-top: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+#regForm{
+    display: grid;
+    /* display: none; */
+    align-items: center;
+    grid-template-rows: 0.2fr 1fr 1fr 1fr 0.8fr;
+    grid-auto-rows: auto;
+    position: absolute;
+    height: 45%;
+    width: 50%;
+    background: rgba(173, 118, 67, 0.9);
     margin-left: 25%;
     margin-top: 10%;
     padding-top: 10px;
@@ -50,7 +66,6 @@ div.part{
     text-align: center;
 }
 input.login{
-    text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
     width: 60%;
@@ -58,6 +73,17 @@ input.login{
     margin-left: 20%;
 }
 input.loginButton{
+    width: 40%;
+    margin-left: 30%;
+}
+input.reg{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 60%;
+    height: 40%;
+    margin-left: 20%;
+}
+input.regButton{
     width: 40%;
     margin-left: 30%;
 }

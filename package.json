@@ -1,5 +1,5 @@
 {
-  "name": "epressapp",
+  "name": "weather-spa",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -11,6 +11,7 @@
   "dependencies": {
     "angular": "^1.7.9",
     "express": "^4.17.1",
-    "node-couchdb": "^1.3.0"
+    "node-couchdb": "^1.3.0",
+    "ws": "^7.2.5"
   }
 }

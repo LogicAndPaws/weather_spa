@@ -14,16 +14,27 @@
             CENTER
         </div>
         <div class="part" id="menu">
-            MENU
+            <p>TestWS</p>
+            <input type="text" id="testMessage"/>
+            <input type="button" id="testSend" onclick="testSend()"/>
         </div>
         <div class="part" id="footer">
             @Copyrights
         </div>
         <div id="loginForm">
             Enter auth information<br>
-            <input type="text" class="login" id="loginEmail" placeholder="Email"/>
-            <input type="text" class="login" id="loginPass" placeholder="*****"/>
+            <input type="email" class="login" id="loginEmail" placeholder="Email"/>
+            <input type="password" class="login" id="loginPass" placeholder="*****"/>
             <input type="button" class="loginButton" id="loginConfirm" value="Login"/>
         </div>
+        <div id="regForm">
+            Registration<br>
+            <input type="email" class="reg" id="regEmail" placeholder="Email"/>
+            <input type="password" class="reg" id="regPass" placeholder="New password"/>
+            <input type="password" class="reg" id="regPassConf" placeholder="Confirm"/>
+            <input type="button" class="regButton" id="regConfirm" value="Confirm" onclick="regConfirm()"/>
+        </div>
+        <script src="res/js/mainController.js"></script>
+        <script src="res/js/angular.min.js"></script>
     </body>
 </html>

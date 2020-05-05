@@ -1,5 +1,6 @@
 var NodeCouchDb = require('node-couchdb');
 var express = require('express');
+var initWs = require('./web-socket-server').initWs
 
 var spaApp = express();
 
@@ -29,6 +30,7 @@ spaApp.get('/', function (req, res) {
 
 spaApp.listen(APP_PORT, function () {
   var tablePromise = new Promise(initTables);
+  initWs();
   Promise.all([tablePromise]).then(values => {
     console.log('INFO: App started on ' + APP_PORT);
   })
@@ -59,5 +61,7 @@ function initTables(resolve, reject){
   Promise.all([initBase]).then(values => {
     console.log("INFO: Database is ready");
     resolve(1)
+  }, error => {
+    console.log("ERROR: " + error)
   });
 }
