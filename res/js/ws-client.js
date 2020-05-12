@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://localhost:3030")
+var ws = new WebSocket("ws://" + window.location.hostname + ":3030")
 var messageInput = document.getElementById("testMessage")
 
 var regForm = document.getElementById("regForm");
