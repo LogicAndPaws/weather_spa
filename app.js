@@ -12,7 +12,7 @@ let TABLES = new Map([
 ])
 
 
-const db = new NodeCouchDb({
+let db = new NodeCouchDb({
   host: 'localhost',
   protocol: 'http',
   port: 5984,
@@ -30,7 +30,7 @@ spaApp.get('/', function (req, res) {
 
 spaApp.listen(APP_PORT, function () {
   var tablePromise = new Promise(initTables);
-  initWs();
+  initWs(db);
   Promise.all([tablePromise]).then(values => {
     console.log('INFO: App started on ' + APP_PORT);
   })

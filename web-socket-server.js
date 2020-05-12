@@ -1,9 +1,15 @@
 const WebSocket = require("ws");
+let db;
+
 const wss = new WebSocket.Server({
     port: 3030
 })
 var connections = {}
 var lastId = 0
+const roles = {
+    guest: "guest",
+    user: "user"
+}
 
 var data = {
     0: {name: 'sdads', age: 42, date: '11.11.11'},
@@ -21,14 +27,18 @@ var data = {
     12: {name: 'opsdads', age: 42, date: '11.11.11'},
 }
 
-exports.initWs = function () {
+exports.initWs = function (dataBase) {
+    db = dataBase
     wss.on("connection", ws => {
         var id = lastId++;
-        connections[id] = ws;
+        connections[id] = roles.guest;
         console.log("WS: User " + id + " connected")
         // ws.send(JSON.stringify(data));
         ws.on("message", message => {
-            console.log("WS: "+ id + ">" + message)
+            console.log("WS: " + id + ">" + message);
+            var answer = JSON.stringify(resolveMessage(message, id));
+            console.log("WS: " + id + "<" + answer);
+            ws.send(answer);
         })
         ws.on("close", () => {
             delete connections[id];
@@ -36,4 +46,22 @@ exports.initWs = function () {
         })
     })
     console.log("INFO: WS Ready")
+}
+
+function resolveMessage(message, id){
+    message = JSON.parse(message);
+    var answer = {
+        action: "error",
+        reason: "Internal Error"
+    };
+    switch(message.action){
+        default: {
+            answer = {
+                action: "deny " + message.action,
+                reason: "Test",
+            }
+            break;
+        }
+    }
+    return answer;
 }

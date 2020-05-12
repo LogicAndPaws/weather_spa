@@ -2,37 +2,56 @@
 <html>
     <head>
         <title>Main page</title>
-        <link rel="stylesheet" href="res/css/mainPage.css">
+        <!-- <link rel="stylesheet" href="res/css/mainPage.css"> -->
+        <link rel="stylesheet" href="res/css/w3.css">
+        <link rel="stylesheet" href="res/css/w3-theme-teal.css">
+        <!-- <link rel="stylesheet" href="res/css/w3-theme-black.css"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body>
-        <div class="part" id="header">
-            <p>WeatherApp</p>
-            <input type="button" class="header" id="headerLogin" value="Login"/>
-            <input type="button" class="header" id="headerRegister" value="Register"/>
+    <body style="height: 100vh; padding: 10px;" class="w3-theme-l5">
+        <div class="w3-container" style="height: 100%; margin: 0;">
+            <div class="w3-border w3-row w3-center w3-theme">
+                <div class="w3-col m8 w3-center">
+                    WebApp
+                </div>
+                <div class="w3-col m2 w3-center w3-theme-d2">
+                    <input type="button" class="w3-btn w3-block w3-border" id="loginBtn" value="Login" onclick="loginBtn()"/>
+                </div>
+                <div class="w3-col m2 w3-center w3-theme-d2">
+                    <input type="button" class="w3-btn w3-block w3-border" id="regBtn" value="Register" onclick="regBtn()"/>
+                </div>
+            </div>
+            <div class="w3-row w3-center w3-border" style="height: 85%;">
+                <div class="w3-border w3-col w3-center m4 w3-theme-l1" style="height: 100%;">Menu</div>
+                <div class="w3-border w3-col w3-center m8 w3-theme-l4" style="height: 100%;">Center</div>
+            </div>
+            <div class="w3-border w3-row w3-center w3-theme">
+                @Copyrights
+            </div>
         </div>
-        <div class="part" id="center">
-            CENTER
+        <!-- Forms -->
+        <div id="loginForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+            <label class="w3-input">Login Form</label>
+            <input class="w3-input" type="email" id="loginEmail" placeholder="Email"/>
+            <input class="w3-input" type="password" id="loginPass" placeholder="********"/>
+            <label id="loginInfo" class="w3-left"></label>
+            <br>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginConfirm" value="Confirm" onclick="loginConfirm()"/>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginClose" value="Confirm" onclick="loginBtn()"/>
         </div>
-        <div class="part" id="menu">
-            <p>TestWS</p>
-            <input type="text" id="testMessage"/>
-            <input type="button" id="testSend" onclick="testSend()"/>
-        </div>
-        <div class="part" id="footer">
-            @Copyrights
-        </div>
-        <div id="loginForm">
-            Enter auth information<br>
-            <input type="email" class="login" id="loginEmail" placeholder="Email"/>
-            <input type="password" class="login" id="loginPass" placeholder="*****"/>
-            <input type="button" class="loginButton" id="loginConfirm" value="Login"/>
-        </div>
-        <div id="regForm">
-            Registration<br>
-            <input type="email" class="reg" id="regEmail" placeholder="Email"/>
-            <input type="password" class="reg" id="regPass" placeholder="New password"/>
-            <input type="password" class="reg" id="regPassConf" placeholder="Confirm"/>
-            <input type="button" class="regButton" id="regConfirm" value="Confirm" onclick="regConfirm()"/>
+        <div id="regForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+            <label class="w3-input">Registration form</label><br>
+            <label class="w3-left">Email</label>
+            <input type="email" class="w3-input" id="regEmail" placeholder="example@mail.com"/>
+            <label class="w3-left">Password</label>
+            <input type="password" class="w3-input" id="regPass" placeholder="********"/>
+            <label class="w3-left">Password again</label>
+            <input type="password" class="w3-input" id="regPassConf" placeholder="********"/>
+            <label id="regInfo" class="w3-left"></label>
+            </label>
+            <br>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px 0; width: 40%;" type="button" id="regConfirm" value="Confirm" onclick="regConfirm()"/>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px 0; width: 40%;" type="button" id="regClose" value="Confirm" onclick="regBtn()"/>
         </div>
         <script src="res/js/mainController.js"></script>
         <script src="res/js/angular.min.js"></script>
