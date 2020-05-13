@@ -14,6 +14,41 @@ var loginPass = document.getElementById("loginPass")
 var loginInfo = document.getElementById("loginInfo");
 var loginConfirmBtn = document.getElementById("loginConfirm")
 
+var model = {
+    items:[
+        {
+            date: "12.05.2020",
+            temperature: 1,
+            weather: "Snow",
+            wind: 5
+        },
+        {
+            date: "13.05.2020",
+            temperature: 9,
+            weather: "Clouds",
+            wind: 8
+        },
+        {
+            date: "14.05.2020",
+            temperature: 13,
+            weather: "Rain",
+            wind: 2
+        },
+        {
+            date: "15.05.2020",
+            temperature: 5,
+            weather: "Sunny",
+            wind: 1
+        },
+        {
+            date: "16.05.2020",
+            temperature: 7,
+            weather: "Clouds",
+            wind: 3
+        }
+    ]
+};
+
 ws.onmessage = function (event) {
     var message = JSON.parse(event.data);
     resolveMessage(message)
@@ -34,6 +69,7 @@ function resolveMessage(message){
             break;            
         }
         case "confirm regUser":{
+            regInfo.innerHTML = message.reason;
             //TODO
             break;
         }

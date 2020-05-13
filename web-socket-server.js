@@ -1,4 +1,7 @@
 const WebSocket = require("ws");
+let User = require("./utils").User;
+let Endpoint = require("./utils").Endpoint;
+let Data = require("./utils").Data;
 let db;
 
 const wss = new WebSocket.Server({
@@ -55,6 +58,36 @@ function resolveMessage(message, id){
         reason: "Internal Error"
     };
     switch(message.action){
+        case "regUser": {
+            if(message.data.email != undefined && message.data.pass != undefined){
+                //TODO validation
+                let newUser = new User(message.data.email, message.data.pass, "user");
+                let existUser = db.findUser(newUser.email);
+                if(existUser === ""){
+                    db.addUser(newUser);
+                    answer = {
+                        action: "confirm regUser",
+                        reason: newUser.email
+                    }
+                } else if(existUser == null){
+                    answer = {
+                        action: "deny regUser",
+                        reason: "Internal error"
+                    }
+                } else {
+                    answer = {
+                        action: "deny regUser",
+                        reason: "User with this email already exists"
+                    }
+                }
+            } else {
+                answer = {
+                    action: "deny regUser",
+                    reason: "Invaliid email or password"
+                }
+            }
+            break;
+        }
         default: {
             answer = {
                 action: "deny " + message.action,
