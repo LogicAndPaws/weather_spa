@@ -59,6 +59,7 @@ ws.onmessage = function (event) {
 function resolveMessage(message){
     switch(message.action){
         case "confirm loginUser":{
+            loginInfo.innerHTML = message.reason;
             //TODO
             break;
         }

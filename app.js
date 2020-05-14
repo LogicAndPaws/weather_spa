@@ -14,9 +14,7 @@ spaApp.get('/', function (req, res) {
 });
 
 spaApp.listen(APP_PORT, function () {
-  var tablePromise = new Promise(base.initBase);
+  base.initBase();
   ws.initWs(base);
-  Promise.all([tablePromise]).then(values => {
-    console.log('INFO: App started on ' + APP_PORT);
-  })
+  console.log("INFO: App started on " + APP_PORT);
 });
