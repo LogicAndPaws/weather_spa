@@ -9,32 +9,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body style="height: 100vh; padding: 10px;" class="w3-theme-l5">
-        <div class="w3-container" style="height: 100%; margin: 0;">
+        <div class="w3-container" style="height: 100%; margin: 0;" ng-controller="centerController">
             <div class="w3-border w3-row w3-center w3-theme">
                 <div class="w3-col m8 w3-center">
                     Weather Application
                 </div>
-                <div class="w3-col m2 w3-center w3-theme-d2">
-                    <input type="button" class="w3-btn w3-block w3-border" id="loginBtn" value="Login" onclick="loginBtn()"/>
+                <div id="loginDiv" class="w3-col m2 w3-center w3-theme-d2">
+                    <input type="button" class="w3-btn w3-block w3-border" id="loginBtn" value="Login" onclick="loginBtn()" ng-click="update()"/>
                 </div>
-                <div class="w3-col m2 w3-center w3-theme-d2">
-                    <input type="button" class="w3-btn w3-block w3-border" id="regBtn" value="Register" onclick="regBtn()"/>
+                <div id="regDiv" class="w3-col m2 w3-center w3-theme-d2">
+                    <input type="button" class="w3-btn w3-block w3-border" id="regBtn" value="Register" onclick="regBtn()" ng-click="update()"/>
+                </div>
+                <div id="userDiv" class="w3-col m2 w3-center w3-block" style="display: none;">
+                    Guest
+                </div>
+                <div id="logoutDiv" class="w3-col m2 w3-center w3-theme-d2" style="display: none;">
+                    <input type="button" class="w3-btn w3-block w3-border" id="logoutBtn" value="LogOut" onclick="logoutBtn()"/>
                 </div>
             </div>
             <div class="w3-row w3-center w3-border" style="height: 85%;">
                 <div class="w3-border w3-col w3-center m3 w3-theme-l1" style="height: 100%;">
-                    Menu
+                    <P>Current date: {{day}}</P>
+                    <input type="button" class="w3-btn w3-block w3-border w3-theme-d2" id="updateBtn" value="Update" ng-click="update()"/>
+                    <input type="button" class="w3-btn w3-block w3-border w3-theme-d2" id="endpointBtn" disabled value="Add data source" onclick="endpointBtnClick()" title="You must be logined!"/>
                     <!-- TODO filtering, sorting -->
                 </div>
-                <div class="w3-border w3-col w3-center m9 w3-theme-l4" style="height: 100%; overflow: auto;" ng-controller="centerController">
-                    <div ng-repeat="hour,prognose in table" class="w3-theme-d5">
-                        <p>{{hour}}</p>
-                        <ul>
-                            <li>Temp: {{prognose.temperature}} C</li>
-                            <li>Weather: {{prognose.weather}}</li>
-                            <li>Wind speed: {{prognose.wind}} m/s</li>
-                        </ul>
-                    </div>
+                <div class="w3-border w3-col w3-center m9 w3-theme-l4" style="height: 100%; overflow: auto;">
+                    <table class="w3-table w3-theme-d5">
+                        <tr class="w3-theme-d3">
+                            <td>Time</td>
+                            <td>Temperature</td>
+                            <td>Weather</td>
+                            <td>Wind</td>
+                        </tr>
+                        <tr class="w3-border" ng-repeat="(hour, prognose) in table">
+                            <td>{{hour}}</td>
+                            <td>{{prognose.temperature}} C</td>
+                            <td>{{prognose.weather}}</td>
+                            <td>{{prognose.wind}} m/s</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="w3-border w3-row w3-center w3-theme">
@@ -42,6 +56,14 @@
             </div>
         </div>
         <!-- Forms -->
+        <div id="endpointForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+            <label class="w3-input">Add endpoint</label>
+            <label class="w3-left">Address</label>
+            <input class="w3-input" type="text" id="endpointAddress" placeholder="http://"/>
+            <br>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="endpointConfirm" value="Confirm" onclick="endpointConfirm()"/>
+            <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginClose" value="Close" onclick="endpointBtnClick()"/>
+        </div>
         <div id="loginForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
             <label class="w3-input">Login Form</label>
             <input class="w3-input" type="email" id="loginEmail" placeholder="Email"/>

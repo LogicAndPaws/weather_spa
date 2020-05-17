@@ -10,5 +10,9 @@
 var weatherApp = angular.module("weatherApp", []);
 weatherApp.controller("centerController", function ($scope) {
     $scope.table = model.weatherTable;
-    $scope.day = model.currentDay;        
+    $scope.day = model.currentDay;   
+
+    $scope.update = function(){
+        $scope.table = model.weatherTable;
+    }
 });

@@ -70,16 +70,17 @@ exports.getData = function (date, callbackS, callbackE) {
             callbackE(error.sqlMessage)
         }
         else {
-            callbackS(result)
+            callbackS(result, date)
         };
     })
 };
 
 exports.saveData = function (newData) {
-    console.log("INFO: Inserting new data: " + JSON.stringify(newData));
+    console.log("INFO: Inserting new data...");
     db.query('INSERT INTO data VALUES (?, ?, ?)',[
-        newData.owner, JSON.stringify(newData.data), newData.date
+        newData.owner, newData.data, newData.date
     ], function (err) {
+        if(err != null)
         console.log("ERROR: " + err.sqlMessage);
      });
 }
