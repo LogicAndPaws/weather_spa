@@ -14,8 +14,9 @@ exports.Endpoint = class {
 }
 
 exports.Data = class {
-    constructor(mainField, parameters){
-        this.mainField = mainField;
-        this.parameters = parameters;
+    constructor(owner, data, date){
+        this.owner = owner;
+        this.data = data;
+        this.date = date;
     }
 }

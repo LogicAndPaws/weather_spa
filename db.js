@@ -14,13 +14,13 @@ let TABLES = new Map([
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '177013',
+    password: '4141',
     database: 'weather'
 });
 
 exports.initBase = async function () {
     db.query('CREATE TABLE user(email varchar(200) UNIQUE, password varchar(200), status varchar(20))', function (err) { });
-    db.query('CREATE TABLE data(owner varchar(200), commit_data mediumtext, commit_date date)', function (err) { });
+    db.query('CREATE TABLE data(owner varchar(200), commit_data mediumtext, commit_date varchar(20))', function (err) { });
     db.query('CREATE TABLE endpoint(owner varchar(200), address varchar(255))', function (err) { });
     db.query('SHOW TABLES', function (error, result, fields) {
         if (error != null) console.log(error.sqlMessage);
@@ -55,7 +55,7 @@ exports.addEndpoint = function (endpoint) {
 
 };
 
-exports.getEndpoints = function () {
+exports.getEndpoints = function (callbackS, callbackE) {
 
 };
 
@@ -63,6 +63,23 @@ exports.deleteEndpoint = function (owner) {
 
 };
 
-exports.getData = function (date) {
-
+exports.getData = function (date, callbackS, callbackE) {
+    db.query('SELECT * FROM data WHERE commit_date=?', [date], function (error, result, fields) {
+        if (error != null) {
+            console.log(error.sqlMessage);
+            callbackE(error.sqlMessage)
+        }
+        else {
+            callbackS(result)
+        };
+    })
 };
+
+exports.saveData = function (newData) {
+    console.log("INFO: Inserting new data: " + JSON.stringify(newData));
+    db.query('INSERT INTO data VALUES (?, ?, ?)',[
+        newData.owner, JSON.stringify(newData.data), newData.date
+    ], function (err) {
+        console.log("ERROR: " + err.sqlMessage);
+     });
+}

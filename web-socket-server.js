@@ -22,23 +22,77 @@ let TABLES = new Map([
     ["ENDPOINTS", "endpoints"]
 ])
 
+var ACTUAL_DATA = {}
+
 exports.initWs = function (dataBase) {
     db = dataBase
     wss.on("connection", ws => {
         // var id = lastId++;
         connections[ws] = roles.guest;
-        console.log("WS: User " + id + " connected")
+        sendData(strDate(new Date(Date.now())), ws)
+        // console.log("WS: User " + id + " connected")
         // ws.send(JSON.stringify(data));
         ws.on("message", message => {
-            console.log("WS: " + id + ">" + message);
-            resolveMessage(message, ws, id);
+            // console.log("WS: " + id + ">" + message);
+            resolveMessage(message, ws);
         })
         ws.on("close", () => {
             delete connections[ws];
-            console.log("WS: User " + id + " disconnected")
+            // console.log("WS: User " + id + " disconnected")
         })
     })
+    // calculateData(strDate(new Date(Date.now())));
     console.log("INFO: WS Ready")
+}
+
+function strDate(date){
+    return date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear();
+}
+
+function calculateData(date) {
+    db.getData(date, insertCurrent, () => {});
+};
+
+//owner (email), commit_data (json), commit_date '7.4.2020'
+//temperature, weather, wind
+//var ACTUAL_DATA = {}
+function insertCurrent(dataSet){
+    var weathers = [
+        [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
+    ];
+    for (var data of dataSet) {
+        var weather = JSON.parse(data.commit_data);
+        for (var i = 0; i < 24; i++){
+            weathers[i].push(weather[i]);
+        }
+    }
+    for (var i = 0; i < 24; i++){
+        var sumTemp = 0;
+        var sumwind = 0;
+        for (var entity of weathers[i]){
+            sumTemp += entity.temperature;
+            sumWind += entity.wind;
+        }
+        ACTUAL_DATA[dataSet[0].commit_date][i] = {
+            temperature: sumTemp/weathers[i].length,
+            weather: weathers[i][0].weather,
+            wind: sumwind/weathers[i].length
+        }
+    }
+}
+
+function logError(err) {
+
+}
+
+function sendData(date, ws) {
+    var data = ACTUAL_DATA[date];
+    var message = {
+        action: "sendData",
+        data: data,
+        date: date
+    }
+    ws.send(JSON.stringify(message));
 }
 
 function regUser(user, ws) {
@@ -83,7 +137,7 @@ function loginUser(user, ws) {
     })
 }
 
-function resolveMessage(message, ws, id) {
+function resolveMessage(message, ws) {
     message = JSON.parse(message);
     var answer = {
         action: "error",

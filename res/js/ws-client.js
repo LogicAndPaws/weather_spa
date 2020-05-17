@@ -15,45 +15,27 @@ var loginInfo = document.getElementById("loginInfo");
 var loginConfirmBtn = document.getElementById("loginConfirm")
 
 var model = {
-    items:[
-        {
-            date: "12.05.2020",
-            temperature: 1,
-            weather: "Snow",
-            wind: 5
-        },
-        {
-            date: "13.05.2020",
-            temperature: 9,
-            weather: "Clouds",
-            wind: 8
-        },
-        {
-            date: "14.05.2020",
-            temperature: 13,
-            weather: "Rain",
-            wind: 2
-        },
-        {
-            date: "15.05.2020",
-            temperature: 5,
-            weather: "Sunny",
-            wind: 1
-        },
-        {
-            date: "16.05.2020",
-            temperature: 7,
-            weather: "Clouds",
-            wind: 3
-        }
-    ]
+    currentDay: strDate(new Date(Date.now())),
+    weatherTable: {},
+    currentUser: null
 };
+
+function strDate(date){
+    return date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear();
+}
 
 ws.onmessage = function (event) {
     var message = JSON.parse(event.data);
     resolveMessage(message)
     //TODO print somewhere
     console.log(message);
+}
+
+function prepareData(data){
+    for(var i = 0; i < 24; i++){
+        let hour = i + ":00"
+        weatherTable[hour] = data[i]
+    }
 }
 
 function resolveMessage(message){
@@ -78,6 +60,10 @@ function resolveMessage(message){
             regInfo.innerHTML = message.reason;
             regConfirmBtn.disabled = false;
             loginConfirmBtn.disabled = false;  
+            break;
+        }
+        case "sendData":{
+            prepareData(message.data)
             break;
         }
         case "error": {

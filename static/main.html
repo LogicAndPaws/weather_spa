@@ -27,8 +27,8 @@
                     <!-- TODO filtering, sorting -->
                 </div>
                 <div class="w3-border w3-col w3-center m9 w3-theme-l4" style="height: 100%; overflow: auto;" ng-controller="centerController">
-                    <div ng-repeat="prognose in list.items" class="w3-theme-d5">
-                        <p>{{prognose.date}}</p>
+                    <div ng-repeat="hour,prognose in table" class="w3-theme-d5">
+                        <p>{{hour}}</p>
                         <ul>
                             <li>Temp: {{prognose.temperature}} C</li>
                             <li>Weather: {{prognose.weather}}</li>
