@@ -37,14 +37,10 @@ exports.initWs = function (dataBase) {
             resolveMessage(message, ws);
         })
         ws.on("close", () => {
-            connections[ws] = undefined;
+            delete connections[ws];
         })
     })
     console.log("INFO: WS Ready")
-}
-
-function strDate(date){
-    return date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear();
 }
 
 function calculateData(date) {
@@ -55,9 +51,6 @@ exports.updateData = function(){
     calculateData(utils.strDate(new Date(Date.now())));
 }
 
-//owner (email), commit_data (json), commit_date '7.4.2020'
-//temperature, weather, wind
-//var ACTUAL_DATA = {}
 function insertCurrent(dataSet, date){
     console.log("INFO: Updating current table...")
     var weathers = [];
@@ -84,6 +77,7 @@ function insertCurrent(dataSet, date){
         }
     }
     console.log("INFO: Updated -> " + new Date(Date.now()));
+    resendToAll()
 }
 
 function resendToAll(){
@@ -157,7 +151,6 @@ function resolveMessage(message, ws) {
     switch (message.action) {
         case "regUser": {
             if (message.data.email != undefined && message.data.pass != undefined) {
-                //TODO validation
                 let newUser = new User(message.data.email, message.data.pass, "user");
                 regUser(newUser, ws)
             } else {
@@ -177,8 +170,9 @@ function resolveMessage(message, ws) {
         default: {
             answer = {
                 action: "deny " + message.action,
-                reason: "Test",
+                reason: "Wrong request",
             }
+            ws.send(JSON.stringify(answer))
             break;
         }
     }

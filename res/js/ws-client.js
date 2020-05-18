@@ -1,5 +1,4 @@
 var ws = new WebSocket("ws://" + window.location.hostname + ":3030")
-var messageInput = document.getElementById("testMessage")
 
 var regForm = document.getElementById("regForm");
 var regEmail = document.getElementById("regEmail")
@@ -54,7 +53,6 @@ function prepareData(data){
 function resolveMessage(message){
     switch(message.action){
         case "confirm loginUser":{
-            // loginInfo.innerHTML = message.reason;
             model.currentUser = message.reason;
             loginBtn();
             userMode();
@@ -67,7 +65,6 @@ function resolveMessage(message){
             break;            
         }
         case "confirm regUser":{
-            // regInfo.innerHTML = message.reason;
             model.currentUser = message.reason;
             regBtn()
             userMode();
