@@ -35,11 +35,12 @@ function strDate(date){
     return date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
 }
 
-ws.onmessage = function (event) {
+ws.onmessage = consumeMessage;
+
+function consumeMessage(event){
     var message = JSON.parse(event.data);
     console.log(message);
     resolveMessage(message)
-    //TODO print somewhere
 }
 
 function prepareData(data){
@@ -92,7 +93,7 @@ function resolveMessage(message){
 function userMode(){
     regDiv.style.display = "none";
     loginDiv.style.display = "none";
-    userDiv.style.innerHTML = model.currentUser;
+    userDiv.innerHTML = model.currentUser;
     userDiv.style.display = "block";
     logoutDiv.style.display = "block";
     endpointBtn.disabled = false;
@@ -161,6 +162,7 @@ function regBtn() {
 function logoutBtn() {
     ws.close();
     ws = new WebSocket("ws://" + window.location.hostname + ":3030");
+    ws.onmessage = consumeMessage;
     regDiv.style.display = "block";
     loginDiv.style.display = "block";
     model.currentUser = "Guest"

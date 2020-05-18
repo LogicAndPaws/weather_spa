@@ -20,7 +20,7 @@ spaApp.get('/', function (req, res) {
 spaApp.listen(APP_PORT, function () {
   base.initBase();
   ws.initWs(base);
-  apiChecker = schedule.scheduleJob("* /10 * * *", checkEndpoints);
+  apiChecker = schedule.scheduleJob("*/10 * * * *", checkEndpoints);
   checkEndpoints();
   console.log("INFO: App started on " + APP_PORT);
 });

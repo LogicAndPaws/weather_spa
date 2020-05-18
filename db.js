@@ -14,7 +14,7 @@ let TABLES = new Map([
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '4141',
+    password: '177013',
     database: 'weather'
 });
 

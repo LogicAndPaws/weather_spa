@@ -37,7 +37,7 @@ exports.initWs = function (dataBase) {
             resolveMessage(message, ws);
         })
         ws.on("close", () => {
-            delete connections[ws];
+            connections[ws] = undefined;
         })
     })
     console.log("INFO: WS Ready")
