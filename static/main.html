@@ -2,13 +2,16 @@
 <html ng-app="weatherApp">
     <head>
         <title>Weather-SPA</title>
-        <!-- <link rel="stylesheet" href="res/css/mainPage.css"> -->
+        <style>
+            body {
+                background-image: url(res/img/bg.jpg);
+            }
+        </style>
         <link rel="stylesheet" href="res/css/w3.css">
-        <link rel="stylesheet" href="res/css/w3-theme-teal.css">
-        <!-- <link rel="stylesheet" href="res/css/w3-theme-black.css"> -->
+        <link rel="stylesheet" href="res/css/w3-theme-blue.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body style="height: 100vh; padding: 10px;" class="w3-theme-l5">
+    <body style="height: 100vh; padding: 20px;" class="w3-theme-l5">
         <div class="w3-container" style="height: 100%; margin: 0;" ng-controller="centerController">
             <div class="w3-border w3-row w3-center w3-theme">
                 <div class="w3-col m8 w3-center">
@@ -56,7 +59,7 @@
             </div>
         </div>
         <!-- Forms -->
-        <div id="endpointForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+        <div id="endpointForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 70%; display: none;">
             <label class="w3-input">Add endpoint</label>
             <label class="w3-left">Address</label>
             <input class="w3-input" type="text" id="endpointAddress" placeholder="http://"/>
@@ -64,7 +67,7 @@
             <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="endpointConfirm" value="Confirm" onclick="endpointConfirm()"/>
             <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginClose" value="Close" onclick="endpointBtnClick()"/>
         </div>
-        <div id="loginForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+        <div id="loginForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 70%; display: none;">
             <label class="w3-input">Login Form</label>
             <input class="w3-input" type="email" id="loginEmail" placeholder="Email"/>
             <input class="w3-input" type="password" id="loginPass" placeholder="********"/>
@@ -73,7 +76,7 @@
             <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginConfirm" value="Confirm" onclick="loginConfirm()"/>
             <input class="w3-btn w3-grey w3-center w3-theme" style="margin: 10px; width: 40%;" type="button" id="loginClose" value="Close" onclick="loginBtn()"/>
         </div>
-        <div id="regForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 80%; display: none;">
+        <div id="regForm" class="w3-container w3-card-4 w3-center w3-display-middle w3-theme-d4" style="width: 70%; display: none;">
             <label class="w3-input">Registration form</label><br>
             <label class="w3-left">Email</label>
             <input type="email" class="w3-input" id="regEmail" placeholder="example@mail.com"/>

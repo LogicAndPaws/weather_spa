@@ -29,7 +29,7 @@ function checkEndpoints(){
   console.log("INFO: Checking endpoints...")
   http.get('http://192.168.100.101:3003/weather', (res) => {
     res.on("data", data => {
-      base.saveData(new Data("test@m.c", utils.bin2string(data), utils.strDate(new Date(Date.now()))));
+      base.saveData(new Data("test@gmail.com", utils.bin2string(data), utils.strDate(new Date(Date.now()))));
       ws.updateData();
     })
   })

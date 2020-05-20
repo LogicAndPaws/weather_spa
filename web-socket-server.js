@@ -6,11 +6,12 @@ let Data = require("./utils").Data;
 let utils = require("./utils");
 const UUIDNS = "ABCDEFGH";
 let db;
-
+let nextId = 0;
 const wss = new WebSocket.Server({
     port: 3030
 })
 var connections = {}
+var users = {}
 const roles = {
     guest: "guest",
     user: "user"
@@ -30,14 +31,17 @@ exports.updateData = function(){
 
 exports.initWs = function (dataBase) {
     db = dataBase
+    let id = nextId++;
     wss.on("connection", ws => {
-        connections[ws] = roles.guest;
+        users[ws] = roles.guest;
+        connections[id] = ws;
         sendData(utils.strDate(new Date(Date.now())), ws)
         ws.on("message", message => {
             resolveMessage(message, ws);
         })
         ws.on("close", () => {
-            delete connections[ws];
+            delete users[ws];
+            delete connections[id];
         })
     })
     console.log("INFO: WS Ready")
@@ -81,8 +85,8 @@ function insertCurrent(dataSet, date){
 }
 
 function resendToAll(){
-    for (var ws in connections) {
-        sendData(utils.strDate(new Date(Date.now())), ws);
+    for (var id in connections) {
+        sendData(utils.strDate(new Date(Date.now())), connections[id]);
     }
 }
 
@@ -102,7 +106,7 @@ function sendData(date, ws) {
 
 function regUser(user, ws) {
     db.addUser(user, function () {
-        connections[ws] = user.email;
+        users[ws] = user.email;
         var answer = {
             action: "confirm regUser",
             reason: user.email
@@ -119,7 +123,7 @@ function regUser(user, ws) {
 }
 function loginUser(user, ws) {
     db.findUser(user, function (found) {
-        connections[ws] = user.email;
+        users[ws] = user.email;
         answer = {
             action: "confirm loginUser",
             reason: user.email
